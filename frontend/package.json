@@ -47,7 +47,7 @@
   "homepage": "https://ameerqatmosh.github.io/formify",
   "devDependencies": {
     "autoprefixer": "^10.4.20",
-    "gh-pages": "^6.2.0",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.17"
   }
