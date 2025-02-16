@@ -1,0 +1,53 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: auto;
+  max-width: 100px; /* Adjust the max width of the logo */
+  pointer-events: none;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .App-logo {
+    max-width: 50px; /* Make logo smaller for mobile */
+  }
+
+  .App-header {
+    padding: 10px; /* Adjust padding on smaller screens */
+  }
+}
+
+
+.App-header {
+  background-color: black;
+  min-height: 100vh; /* You can change this to min-h-screen from Tailwind */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
