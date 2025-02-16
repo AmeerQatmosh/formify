@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import SortableField from "./SortableField";
+
+
 export default function FormBuilder({ fields, setFields, setRecords, darkMode }) { // 🔥 Use fields from App.js
   const [newField, setNewField] = useState({ label: "", type: "text", options: "" });
   const [formData, setFormData] = useState({});
@@ -10,7 +15,7 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
       ? newField.options.split(",").map(opt => opt.trim()).filter(opt => opt)
       : [];
     const newFieldData = { id: Date.now().toString(), ...newField, options };
-    
+
     setFields([...fields, newFieldData]); // 🔥 Update fields
     setNewField({ label: "", type: "text", options: "" });
   };
@@ -26,6 +31,17 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
     }
     setRecords((prevRecords) => [...prevRecords, formData]);
     setFormData({});
+  };
+
+  // 🚀 Handle Drag & Drop Sorting
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = fields.findIndex((field) => field.id === active.id);
+    const newIndex = fields.findIndex((field) => field.id === over.id);
+
+    setFields(arrayMove(fields, oldIndex, newIndex));
   };
 
   return (
@@ -59,15 +75,28 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
           className={`border p-2 rounded-md w-full mb-2 ${darkMode ? "bg-gray-600 text-white border-gray-500" : "bg-white border-gray-300"}`}
         />
       )}
-      <button 
-        onClick={addField} 
+      <button
+        onClick={addField}
         className="px-4 py-2 bg-blue-500 text-white rounded-md w-full hover:bg-blue-600 transition"
       >
         Add Field
       </button>
 
+
+      {/* 🚀 Drag & Drop Fields */}
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={fields.map(field => field.id)} strategy={verticalListSortingStrategy}>
+          <div className="space-y-3 mt-4">
+            {fields.map((field) => (
+              <SortableField key={field.id} field={field} formData={formData} handleInputChange={handleInputChange} darkMode={darkMode} />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
+
+
       {/* Render Fields */}
-      <div className="space-y-3 mt-4">
+      {/* <div className="space-y-3 mt-4">
         {fields.map((field) => (
           <div key={field.id} className={`p-3 border rounded-md ${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-200 border-gray-300"}`}>
             <label className="block text-sm font-medium">{field.label}</label>
@@ -79,11 +108,11 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
             />
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Save Button */}
-      <button 
-        onClick={saveRecord} 
+      <button
+        onClick={saveRecord}
         className="px-4 py-2 mt-4 bg-green-500 text-white rounded-md w-full hover:bg-green-600 transition"
       >
         Save Record
