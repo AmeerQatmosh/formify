@@ -136,19 +136,19 @@ export default function DynamicFormBuilder() {
           </button>
           <button 
             onClick={() => exportData("xlsx")} 
-            className="px-4 py-2 m-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
           >
             Download Excel
           </button>
           <button 
             onClick={() => exportData("csv")} 
-            className="px-4 py-2 m-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition"
+            className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition"
           >
             Download CSV
           </button>
           <button 
             onClick={() => exportData("json")} 
-            className="px-4 py-2 m-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+            className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
           >
             Download JSON
           </button>

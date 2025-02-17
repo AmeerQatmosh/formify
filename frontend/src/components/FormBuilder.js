@@ -1,13 +1,25 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import SortableField from "./SortableField";
 
-
 export default function FormBuilder({ fields, setFields, setRecords, darkMode }) { // 🔥 Use fields from App.js
   const [newField, setNewField] = useState({ label: "", type: "text", options: "" });
   const [formData, setFormData] = useState({});
+  const [showPreview, setShowPreview] = useState(false); // 🔥 Added for preview modal
+
+  // 🔥 Load saved form from localStorage on page load
+  useEffect(() => {
+    const savedFields = localStorage.getItem("formFields");
+    if (savedFields) {
+      setFields(JSON.parse(savedFields));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("formFields", JSON.stringify(fields));
+  }, [fields]);
+
 
   const addField = () => {
     if (!newField.label.trim()) return alert("Label is required!");
@@ -38,15 +50,70 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = fields.findIndex((field) => field.id === active.id);
-    const newIndex = fields.findIndex((field) => field.id === over.id);
+    setFields((prevFields) => {
+      const oldIndex = prevFields.findIndex((field) => field.id === active.id);
+      const newIndex = prevFields.findIndex((field) => field.id === over.id);
 
-    setFields((prevFields) => arrayMove(prevFields, oldIndex, newIndex));
+      if (oldIndex === -1 || newIndex === -1) return prevFields; // 🔥 Prevent crash if item was removed
+      return arrayMove(prevFields, oldIndex, newIndex);
+    });
   };
 
-
   const removeField = (id) => {
-    setFields(fields.filter((field) => field.id !== id));
+    window.confirm("Are you sure you want to delete this field?") &&
+      setFields((prevFields) => prevFields.filter((field) => field.id !== id));
+  };
+
+  const exportForm = () => {
+    if (fields.length === 0) {
+      alert("No fields to export!");
+      return;
+    }
+
+    try {
+      const json = JSON.stringify(fields, null, 2);
+      const blob = new Blob([json], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "form.json";
+      link.click();
+
+      alert("✅ Form exported successfully!");
+    } catch (error) {
+      alert("❌ Error exporting form. Please try again.");
+    }
+  };
+
+  const importForm = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const importedFields = JSON.parse(e.target.result);
+
+        // 🔥 Validate the imported JSON structure
+        if (!Array.isArray(importedFields)) throw new Error("Invalid JSON format!");
+        if (!importedFields.every(field => field.id && field.label && field.type)) {
+          throw new Error("Invalid form structure!");
+        }
+
+        setFields(importedFields);
+        alert("✅ Form imported successfully!");
+      } catch (error) {
+        alert("❌ Error importing form. Make sure it's a valid JSON file.");
+      }
+    };
+
+    reader.readAsText(file);
+  };
+
+  const clearForm = () => {
+    if (window.confirm("Are you sure you want to clear the form?")) {
+      setFields([]);
+      localStorage.removeItem("formFields");
+    }
   };
 
 
@@ -100,29 +167,12 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
                 formData={formData}
                 handleInputChange={handleInputChange}
                 darkMode={darkMode}
-                removeField={removeField} // 🔥 Pass removeField function
+                removeField={() => removeField(field.id)} // ✅ Now correctly passing it
               />
-
             ))}
           </div>
         </SortableContext>
       </DndContext>
-
-
-      {/* Render Fields */}
-      {/* <div className="space-y-3 mt-4">
-        {fields.map((field) => (
-          <div key={field.id} className={`p-3 border rounded-md ${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-200 border-gray-300"}`}>
-            <label className="block text-sm font-medium">{field.label}</label>
-            <input
-              type={field.type}
-              value={formData[field.label] || ""}
-              onChange={(e) => handleInputChange(field.label, e.target.value)}
-              className={`mt-1 border p-2 rounded-md w-full ${darkMode ? "bg-gray-600 text-white border-gray-500" : "bg-white border-gray-300"}`}
-            />
-          </div>
-        ))}
-      </div> */}
 
       {/* Save Button */}
       <button
@@ -131,6 +181,81 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
       >
         Save Record
       </button>
+
+      <button
+        onClick={exportForm}
+        className="px-4 py-2 mt-4 bg-purple-500 text-white rounded-md w-full hover:bg-purple-600 transition"
+      >
+        Export Form
+      </button>
+
+
+      <input
+        type="file"
+        accept=".json"
+        onChange={importForm}
+        className="hidden"
+        id="import-file"
+      />
+      <label
+        htmlFor="import-file"
+        className="cursor-pointer px-4 py-2 mt-4 bg-yellow-500 text-white rounded-md w-full text-center hover:bg-yellow-600 transition block"
+      >
+        Import Form
+      </label>
+      
+      <button
+        onClick={clearForm}
+        className="px-4 py-2 mt-4 bg-red-500 text-white rounded-md w-full hover:bg-red-600 transition"
+      >
+        Clear Form
+      </button>
+
+
+      {/* 🚀 NEW: Preview Form Button */}
+      <button
+        onClick={() => setShowPreview(true)}
+        className="px-4 py-2 mt-4 bg-purple-500 text-white rounded-md w-full hover:bg-purple-600 transition"
+      >
+        Preview Form
+      </button>
+
+      {/* 🔥 Preview Modal */}
+      {showPreview && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className={`p-6 rounded-md w-96 ${darkMode ? "bg-gray-800 text-white" : "bg-white text-black"}`}>
+            <h2 className="text-xl font-bold mb-4">Form Preview</h2>
+            <div className="space-y-3">
+              {fields.length === 0 ? (
+                <p className="text-gray-500">No fields to preview.</p>
+              ) : (
+                fields.map((field) => (
+                  <div key={field.id} className="mb-2">
+                    <label className="block text-sm font-medium">{field.label}</label>
+                    <input
+                      type={field.type}
+                      className={`mt-1 border p-2 rounded-md w-full ${darkMode ? "bg-gray-700 border-gray-600" : "bg-white border-gray-300"}`}
+                      disabled
+                    />
+                  </div>
+                ))
+              )}
+            </div>
+            <button
+              onClick={() => setShowPreview(false)}
+              className="px-4 py-2 mt-4 bg-red-500 text-white rounded-md w-full hover:bg-red-600 transition"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+
+
     </div>
   );
+
 }
+
+

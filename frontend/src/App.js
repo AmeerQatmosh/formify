@@ -5,7 +5,14 @@ import RecordsTable from "./components/RecordsTable";
 
 export default function App() {
   const [records, setRecords] = useState([]);
-  const [fields, setFields] = useState([]);
+  // const [fields, setFields] = useState([]);
+  const [fields, setFields] = useState(() => {
+    const savedFields = localStorage.getItem("formFields");
+    return savedFields ? JSON.parse(savedFields) : [];
+  });
+
+  
+  
   const [darkMode, setDarkMode] = useState(false);
 
   const exportData = (format) => {

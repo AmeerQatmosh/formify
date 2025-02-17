@@ -9,6 +9,7 @@ export default function SortableField({ field, formData, handleInputChange, dark
     transition,
   };
 
+
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`p-3 border rounded-md flex justify-between items-center cursor-grab ${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-200 border-gray-300"}`}>
       <div className="flex-1">
@@ -20,13 +21,18 @@ export default function SortableField({ field, formData, handleInputChange, dark
           className={`mt-1 border p-2 rounded-md w-full ${darkMode ? "bg-gray-600 text-white border-gray-500" : "bg-white border-gray-300"}`}
         />
       </div>
-      {/* ❌ Delete Button */}
       <button
-        onClick={() => removeField(field.id)} // ✅ Call removeField
+        onClick={removeField} // ✅ Directly calls the delete function
         className="ml-4 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
       >
-        ❌
+        ❌ Delete
       </button>
+
+
+
+
+
+
 
     </div>
   );
