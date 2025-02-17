@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/formify/static/css/main.79b2c337.css",
-    "main.js": "/formify/static/js/main.4f5daca2.js",
+    "main.css": "/formify/static/css/main.62cb191e.css",
+    "main.js": "/formify/static/js/main.7b93e85d.js",
     "static/js/453.8ab44547.chunk.js": "/formify/static/js/453.8ab44547.chunk.js",
     "index.html": "/formify/index.html",
-    "main.79b2c337.css.map": "/formify/static/css/main.79b2c337.css.map",
-    "main.4f5daca2.js.map": "/formify/static/js/main.4f5daca2.js.map",
+    "main.62cb191e.css.map": "/formify/static/css/main.62cb191e.css.map",
+    "main.7b93e85d.js.map": "/formify/static/js/main.7b93e85d.js.map",
     "453.8ab44547.chunk.js.map": "/formify/static/js/453.8ab44547.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.79b2c337.css",
-    "static/js/main.4f5daca2.js"
+    "static/css/main.62cb191e.css",
+    "static/js/main.7b93e85d.js"
   ]
 }
