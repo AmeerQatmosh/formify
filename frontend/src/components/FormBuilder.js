@@ -41,8 +41,14 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
     const oldIndex = fields.findIndex((field) => field.id === active.id);
     const newIndex = fields.findIndex((field) => field.id === over.id);
 
-    setFields(arrayMove(fields, oldIndex, newIndex));
+    setFields((prevFields) => arrayMove(prevFields, oldIndex, newIndex));
   };
+
+
+  const removeField = (id) => {
+    setFields(fields.filter((field) => field.id !== id));
+  };
+
 
   return (
     <div className={`border p-4 rounded-md ${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-200 border-gray-300"} mb-4`}>
@@ -88,7 +94,15 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
         <SortableContext items={fields.map(field => field.id)} strategy={verticalListSortingStrategy}>
           <div className="space-y-3 mt-4">
             {fields.map((field) => (
-              <SortableField key={field.id} field={field} formData={formData} handleInputChange={handleInputChange} darkMode={darkMode} />
+              <SortableField
+                key={field.id}
+                field={field}
+                formData={formData}
+                handleInputChange={handleInputChange}
+                darkMode={darkMode}
+                removeField={removeField} // 🔥 Pass removeField function
+              />
+
             ))}
           </div>
         </SortableContext>
