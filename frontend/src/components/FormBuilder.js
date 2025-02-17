@@ -121,7 +121,7 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
     <div className={`border p-6 rounded-lg shadow-md ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-300 text-gray-900"} mb-4`}>
       <h2 className="text-xl font-semibold mb-4 text-center">Form Builder</h2>
       {/* Add Field Form */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <input
         type="text"
         placeholder="Field Label"
@@ -150,13 +150,14 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
           className={`border p-2 rounded-md w-full mb-2 ${darkMode ? "bg-gray-600 text-white border-gray-500" : "bg-white border-gray-300"}`}
         />
       )}
+      </div>
       <button
         onClick={addField}
-        className="px-4 py-2 bg-blue-500 text-white rounded-md w-full hover:bg-blue-600 transition"
+        className="p-2 px-4 py-2 bg-blue-500 text-white rounded-md w-full hover:bg-blue-600 transition"
       >
         Add Field
       </button>
-      </div>
+
 
       {newField.type === "select" && (
         <input
