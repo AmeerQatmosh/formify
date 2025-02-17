@@ -52,14 +52,14 @@ export default function App() {
         <FormBuilder fields={fields} setFields={setFields} setRecords={setRecords} darkMode={darkMode} />
 
         {/* Export Buttons */}
-        <div className="flex justify-between mt-4">
-          <button onClick={() => exportData("xlsx")} className="px-4 py-2 m-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
+        <div className="flex justify-between mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+          <button onClick={() => exportData("xlsx")} className="px-4 py-2 m-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
             Download Excel
           </button>
-          <button onClick={() => exportData("csv")} className="px-4 py-2 m-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition">
+          <button onClick={() => exportData("csv")} className="px-4 py-2 m-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">
             Download CSV
           </button>
-          <button onClick={() => exportData("json")} className="px-4 py-2 m-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition">
+          <button onClick={() => exportData("json")} className="px-4 py-2 m-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
             Download JSON
           </button>
         </div>

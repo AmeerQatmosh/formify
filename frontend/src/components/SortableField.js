@@ -21,19 +21,12 @@ export default function SortableField({ field, formData, handleInputChange, dark
           className={`mt-1 border p-2 rounded-md w-full ${darkMode ? "bg-gray-600 text-white border-gray-500" : "bg-white border-gray-300"}`}
         />
       </div>
-      <button
+      {/* <button
         onClick={removeField} // ✅ Directly calls the delete function
         className="ml-4 px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
       >
         ❌ Delete
-      </button>
-
-
-
-
-
-
-
+      </button> */}
     </div>
   );
 }

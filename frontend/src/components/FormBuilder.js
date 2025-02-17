@@ -59,10 +59,10 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
     });
   };
 
-  const removeField = (id) => {
-    window.confirm("Are you sure you want to delete this field?") &&
-      setFields((prevFields) => prevFields.filter((field) => field.id !== id));
-  };
+  // const removeField = (id) => {
+  //   window.confirm("Are you sure you want to delete this field?") &&
+  //     setFields((prevFields) => prevFields.filter((field) => field.id !== id));
+  // };
 
   const exportForm = () => {
     if (fields.length === 0) {
@@ -118,8 +118,10 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
 
 
   return (
-    <div className={`border p-4 rounded-md ${darkMode ? "bg-gray-700 border-gray-600" : "bg-gray-200 border-gray-300"} mb-4`}>
+    <div className={`border p-6 rounded-lg shadow-md ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-300 text-gray-900"} mb-4`}>
+      <h2 className="text-xl font-semibold mb-4 text-center">Form Builder</h2>
       {/* Add Field Form */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       <input
         type="text"
         placeholder="Field Label"
@@ -154,6 +156,17 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
       >
         Add Field
       </button>
+      </div>
+
+      {newField.type === "select" && (
+        <input
+          type="text"
+          placeholder="Dropdown Options (comma separated)"
+          value={newField.options}
+          onChange={(e) => setNewField({ ...newField, options: e.target.value })}
+          className={`border p-2 rounded-md mt-2 w-full ${darkMode ? "bg-gray-700 text-white border-gray-600" : "bg-white border-gray-300"}`}
+        />
+      )}
 
 
       {/* 🚀 Drag & Drop Fields */}
@@ -167,13 +180,14 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
                 formData={formData}
                 handleInputChange={handleInputChange}
                 darkMode={darkMode}
-                removeField={() => removeField(field.id)} // ✅ Now correctly passing it
+                //removeField={() => removeField(field.id)} // ✅ Now correctly passing it
               />
             ))}
           </div>
         </SortableContext>
       </DndContext>
 
+      
       {/* Save Button */}
       <button
         onClick={saveRecord}
@@ -182,13 +196,13 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
         Save Record
       </button>
 
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mt-4">
       <button
         onClick={exportForm}
         className="px-4 py-2 mt-4 bg-purple-500 text-white rounded-md w-full hover:bg-purple-600 transition"
       >
-        Export Form
+        Export
       </button>
-
 
       <input
         type="file"
@@ -201,14 +215,14 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
         htmlFor="import-file"
         className="cursor-pointer px-4 py-2 mt-4 bg-yellow-500 text-white rounded-md w-full text-center hover:bg-yellow-600 transition block"
       >
-        Import Form
+        Import
       </label>
       
       <button
         onClick={clearForm}
         className="px-4 py-2 mt-4 bg-red-500 text-white rounded-md w-full hover:bg-red-600 transition"
       >
-        Clear Form
+        Clear
       </button>
 
 
@@ -217,7 +231,7 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
         onClick={() => setShowPreview(true)}
         className="px-4 py-2 mt-4 bg-purple-500 text-white rounded-md w-full hover:bg-purple-600 transition"
       >
-        Preview Form
+        Preview
       </button>
 
       {/* 🔥 Preview Modal */}
@@ -250,12 +264,11 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
           </div>
         </div>
       )}
-
-
-
     </div>
-  );
+    </div>
 
+  
+  );
 }
 
 
