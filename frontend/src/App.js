@@ -2,8 +2,8 @@ import * as XLSX from "xlsx";
 import { useState } from "react";
 import FormBuilder from "./components/FormBuilder";
 import RecordsTable from "./components/RecordsTable";
-
 export default function App() {
+
   const [records, setRecords] = useState([]);
   // const [fields, setFields] = useState([]);
   const [fields, setFields] = useState(() => {
@@ -36,9 +36,9 @@ export default function App() {
   return (
     <div className={`${darkMode ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-900"} min-h-screen p-6`}>
       <div className={`max-w-xl mx-auto shadow-lg p-6 rounded-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
-        {/* Header & Dark Mode Toggle */}
+        {/* Header & Dark Mode Toggle */} 
         <div className="flex justify-between mb-4">
-          <h1 className="text-2xl font-bold">Dynamic Form Builder</h1>
+          <h1 className="text-xl font-bold">Dynamic Form Builder</h1>
           <button 
             onClick={() => setDarkMode(!darkMode)} 
             className="px-3 py-1 rounded transition duration-200 
@@ -53,13 +53,13 @@ export default function App() {
 
         {/* Export Buttons */}
         <div className="flex justify-between mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
-          <button onClick={() => exportData("xlsx")} className="px-4 py-2 m-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+          <button onClick={() => exportData("xlsx")} className="px-4 py-2 m-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition">
             Download Excel
           </button>
-          <button onClick={() => exportData("csv")} className="px-4 py-2 m-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">
+          <button onClick={() => exportData("csv")} className="px-4 py-2 m-2 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition">
             Download CSV
           </button>
-          <button onClick={() => exportData("json")} className="px-4 py-2 m-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition">
+          <button onClick={() => exportData("json")} className="px-4 py-2 m-2 bg-emerald-400 text-white rounded-md hover:bg-emerald-500 transition">
             Download JSON
           </button>
         </div>

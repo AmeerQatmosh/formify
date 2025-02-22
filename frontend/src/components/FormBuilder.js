@@ -153,10 +153,15 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
       </div>
       <button
         onClick={addField}
-        className="p-2 px-4 py-2 bg-blue-500 text-white rounded-md w-full hover:bg-blue-600 transition"
+        className="p-2 px-4 py-2 mt-2 bg-blue-500 text-white rounded-md w-full hover:bg-blue-600 transition"
       >
         Add Field
       </button>
+
+
+    {fields.length === 0 && (
+      <p className="text-center mt-4 w-full">No Fields added yet.</p>
+    )}
 
 
       {newField.type === "select" && (
@@ -197,10 +202,10 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
         Save Record
       </button>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 mt-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
       <button
         onClick={exportForm}
-        className="px-4 py-2 mt-4 bg-purple-500 text-white rounded-md w-full hover:bg-purple-600 transition"
+        className="px-4 py-2 bg-yellow-500 text-white rounded-md w-full hover:bg-yellow-600 transition"
       >
         Export
       </button>
@@ -214,14 +219,14 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
       />
       <label
         htmlFor="import-file"
-        className="cursor-pointer px-4 py-2 mt-4 bg-yellow-500 text-white rounded-md w-full text-center hover:bg-yellow-600 transition block"
+        className="cursor-pointer px-4 py-2 bg-orange-500 text-white rounded-md w-full text-center hover:bg-orange-600 transition block"
       >
         Import
       </label>
       
       <button
         onClick={clearForm}
-        className="px-4 py-2 mt-4 bg-red-500 text-white rounded-md w-full hover:bg-red-600 transition"
+        className="px-4 py-2 bg-red-500 text-white rounded-md w-full hover:bg-red-600 transition"
       >
         Clear
       </button>
@@ -230,7 +235,7 @@ export default function FormBuilder({ fields, setFields, setRecords, darkMode })
       {/* 🚀 NEW: Preview Form Button */}
       <button
         onClick={() => setShowPreview(true)}
-        className="px-4 py-2 mt-4 bg-purple-500 text-white rounded-md w-full hover:bg-purple-600 transition"
+        className="px-4 py-2 bg-pink-500 text-white rounded-md w-full hover:bg-pink-600 transition"
       >
         Preview
       </button>
