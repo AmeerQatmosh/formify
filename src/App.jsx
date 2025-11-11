@@ -1,18 +1,15 @@
 import * as XLSX from "xlsx";
 import { useState } from "react";
-import FormBuilder from "./components/FormBuilder";
-import RecordsTable from "./components/RecordsTable";
+import FormBuilder from "../components/FormBuilder";
+import RecordsTable from "../components/RecordsTable";
 export default function App() {
 
   const [records, setRecords] = useState([]);
-  // const [fields, setFields] = useState([]);
   const [fields, setFields] = useState(() => {
     const savedFields = localStorage.getItem("formFields");
     return savedFields ? JSON.parse(savedFields) : [];
   });
 
-  
-  
   const [darkMode, setDarkMode] = useState(false);
 
   const exportData = (format) => {
@@ -35,14 +32,14 @@ export default function App() {
 
   return (
     <div className={`${darkMode ? "bg-gray-900 text-gray-200" : "bg-gray-100 text-gray-900"} min-h-screen p-6`}>
-      <div className={`max-w-xl mx-auto shadow-lg p-6 rounded-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
+      <div className={`max-w-xl mx-auto shadow-lg p-6 m-12 rounded-md ${darkMode ? "bg-gray-800" : "bg-white"}`}>
         {/* Header & Dark Mode Toggle */} 
         <div className="flex justify-between mb-4">
           <h1 className="text-xl font-bold">Dynamic Form Builder</h1>
           <button 
             onClick={() => setDarkMode(!darkMode)} 
             className="px-3 py-1 rounded transition duration-200 
-            bg-gray-700 text-white hover:bg-gray-600 dark:bg-gray-300 dark:text-gray-900 dark:hover:bg-gray-400"
+            bg-gray-700 text-white hover:bg-gray-600 dark:bg-gray-500 dark:text-gray-200 dark:hover:bg-gray-400 cursor-pointer"
           >
             {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
