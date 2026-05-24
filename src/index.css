@@ -1,15 +1,73 @@
 /* src/index.css */
 @import "tailwindcss";
 
+/**
+ * Tie `dark:*` utilities to the `.dark` class on `<html>` (set by App layout effect +
+ * boot script). Without this, Tailwind v4 prefers `prefers-color-scheme`, so
+ * your OS dark mode fights the “Light” toggle and inherits wrong text colors.
+ */
+@variant dark (&:where(.dark, .dark *));
+
 a {
-  text-decoration: none; /* Remove underline */
+  text-decoration: none;
 }
+
+html:not(.dark) {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* Skip link — hidden until keyboard focus (WCAG bypass block) */
+.skip-link:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link:focus {
+  position: fixed;
+  z-index: 99999;
+  top: 0.65rem;
+  left: 0.65rem;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip: auto;
+  overflow: visible;
+  white-space: normal;
+  border-radius: 0.5rem;
+  border: 2px solid rgb(249 250 251);
+  background: rgb(5 122 85);
+  padding: 0.55rem 0.95rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(255 255 255);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  outline: 2px solid rgb(16 185 129);
+  outline-offset: 2px;
+}
+
+html.dark .skip-link:focus {
+  border-color: rgb(15 23 42);
+  outline-color: rgb(52 211 153);
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button } from "./ui/button.jsx";
 
 export default function AddFieldForm({ onAddField, darkMode }) {
   const [newField, setNewField] = useState({ label: "", type: "text", options: "" });
@@ -47,12 +48,9 @@ export default function AddFieldForm({ onAddField, darkMode }) {
           className={`border p-2 rounded-md w-full mb-2 ${darkMode ? "bg-gray-600 text-white border-gray-500" : "bg-white border-gray-300"}`}
         />
       )}
-      <button
-        onClick={handleAddField}
-        className="px-4 py-2 bg-blue-500 text-white rounded-md w-full hover:bg-blue-600 transition"
-      >
+      <Button type="button" variant="default" className="w-full" onClick={handleAddField}>
         Add Field
-      </button>
+      </Button>
     </div>
   );
 }
