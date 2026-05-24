@@ -2,11 +2,40 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/formify/assets/favicon-BGDh6f_g.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formify</title>
-    <script type="module" crossorigin src="/formify/assets/index-sJxCkwSA.js"></script>
-    <link rel="stylesheet" crossorigin href="/formify/assets/index-DG0n4-kK.css">
+    <meta
+      name="description"
+      content="Formify builds custom forms in your browser — edit fields with drag-and-drop, save submissions to Records, edit or delete rows, and export JSON, CSV, or Excel. Runs locally; great for demos and lightweight workflows."
+    />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f8fafc" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Formify — Form builder &amp; records in the browser" />
+    <meta
+      property="og:description"
+      content="Build forms, collect answers, edit saved records, and export spreadsheets — client-side demo app."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href="/formify/assets/formifyLogo-6L7u8Bjg.svg" />
+    <title>Formify — Form builder &amp; records</title>
+    <script>
+      (function () {
+        try {
+          var pref = localStorage.getItem("formify-theme");
+          var dark =
+            pref === "dark" ? true
+            : pref === "system" ?
+              window.matchMedia("(prefers-color-scheme: dark)").matches
+            : false;
+          document.documentElement.classList.toggle("dark", dark);
+        } catch (e) {
+          document.documentElement.classList.remove("dark");
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/formify/assets/index-C3h4O_vK.js"></script>
+    <link rel="modulepreload" crossorigin href="/formify/assets/radix-D0Vr68uy.js">
+    <link rel="stylesheet" crossorigin href="/formify/assets/index-Brnw_4vP.css">
   </head>
   <body>
     <div id="root"></div>
